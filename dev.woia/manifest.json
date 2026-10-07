@@ -1,0 +1,11 @@
+{
+  "schema":"dev.woia.provider-manifest/v1",
+  "name":"woia-re-owner-settlement",
+  "capability":"re-owner-settlement",
+  "version":"0.5.0",
+  "origin":"native",
+  "authoring_profile":"thin",
+  "actions":["owner-settlement.import","owner-settlement.read","owner-settlement.extract-link","owner-settlement.source-version.accept","owner-settlement.reconcile","owner-settlement.delivery-package"],
+  "consumers":["finance","asset-management","customer-service"],
+  "support":{"deterministic_contract":"implemented","storage_adapter":"NOT_QUALIFIED","external_effects":"unsupported"}
+}

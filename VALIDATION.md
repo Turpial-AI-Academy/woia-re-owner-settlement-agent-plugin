@@ -1,29 +1,9 @@
-# Validation obligations
+# Validation
 
-The scaffold supplies generic package/release validation and regression fixtures. Add domain-specific tests and regressions.
+Authoritative clean-candidate gate: Ecosystem v0.5.4 at f085db668cc597a13e04c0feba9d5f2eb87a84be, mise run plugin:certify-thin --repo <absolute-path>.
 
-Capability regressions should prove bounded amendments of healthy authoritative artifacts, deep-path escalation, preservation of unrelated valid artifacts/evidence, targeted invalidation/revalidation, and independent gate ownership. Assert semantic obligations or observable behavior rather than rigid prose sentences unless exact wording is the contract. Adapt these cases to the capability; do not embed provider-specific policy in generic package validation.
+Run mise run bootstrap, mise run doctor, mise run ci:fast (official manifest/skill/payload validation plus Node tests). Domain regressions cover exact scoped grants, current source/policy, immutable versions, checksum-bound extraction, CAS/replay, discrepancy/UNKNOWN, Finance approval and Customer Service package isolation.
 
-Report reusable durable execution/observation evidence, invalidated evidence, freshly established evidence, and assumptions/inferences that are not evidence. Independently inspect reused evidence and rerun affected checks plus mandatory invariants when changes invalidate it. This refinement does not reduce the formal gates below.
+Thin gates: clean-candidate, official-plugin-validation, agent-skills-validation, payload-safety-validation, portable-archive-validation, provider-domain-regression. Inherited full-profile ci:extended/jobs:local/release:check are dormant authoring tasks, not claimed executed thin gates. No maintenance portability changes.
 
-Before first release:
-
-~~~text
-# after README.plugin.md -> README.md and placeholder replacement
-mise install
-mise run bootstrap
-# optional source diagnostic; not a release gate
-pnpm run checksums:generate
-mise run doctor
-mise run validate
-mise run test
-mise run ci:fast
-mise run ci:extended
-mise run jobs:local
-# commit candidate
-mise run release:check
-~~~
-
-Also run `skills-ref validate` for each skill when available.
-
-No placeholder token or scaffold-only `README.plugin.md` may remain in the release candidate.
+Trusted resource resolution, host backing-store atomicity and external adapter qualification are separate. Operator E2E=NOT_RUN; production_ready=false. Synthetic tests do not validate private organization policies or remote calculator execution.
