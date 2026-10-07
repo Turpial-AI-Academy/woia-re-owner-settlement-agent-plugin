@@ -8,7 +8,9 @@ function ctx(action, department = 'finance') {
   return { actor: 'actor-1', task: 'task-1', org: 'org-1', department, now: '2026-10-07T12:00:00Z', currentPolicyRevision: 1, currentSourceRevision: 1,
     grant: { id: 'grant-1', actor: 'actor-1', department, org: 'org-1', target: 's1', action, validFrom: '2026-10-01T00:00:00Z', validUntil: '2026-11-01T00:00:00Z' },
     policy: { id: 'policy-1', version: '1', digest: hash, revision: 1, validFrom: '2026-10-01T00:00:00Z', validUntil: '2026-11-01T00:00:00Z', decisionClass: 'APPROVAL_REQUIRED', independentApproval: true, approvers: ['finance-reviewer'], reconciliationRuleRef: 'synthetic-matching-rule' },
-    sourceAuthority: { id: 'map-1', version: '1', digest: hash, revision: 1, org: 'org-1', target: 's1', system: source.system, account: source.account, role: 'external-formal-calculator', freshUntil: '2026-11-01T00:00:00Z', conflict: false } };
+    originalDocument: { org: 'org-1', ...source.document },
+    resolvedReferences: { beneficiary: { org: 'org-1', id: source.beneficiary, state: 'ACCEPTED' }, property: { org: 'org-1', id: source.property, state: 'ACCEPTED' }, mandate: { org: 'org-1', id: source.mandate, state: 'ACCEPTED' } },
+    sourceAuthority: { id: 'map-1', version: '1', digest: hash, revision: 1, org: 'org-1', target: 's1', system: source.system, account: source.account, role: 'external-formal-calculator', effectiveFrom: '2026-10-01T00:00:00Z', freshUntil: '2026-11-01T00:00:00Z', conflict: false } };
 }
 function cmd(action, state, payload) { return { action: `owner-settlement.${action}`, org: 'org-1', id: 's1', expectedRevision: state.revision, operationKey: `${action}-${state.revision}`, payload }; }
 function run(state, action, payload, customize = () => {}) {
@@ -79,3 +81,12 @@ test('delivery binds beneficiary and original source digest', () => {
   assert.throws(() => run(s, 'delivery-package', { sourceVersion: 'v1', packageId: 'p', contentRef: 'd', contentSha256: hash, recipient: 'other' }, approval), /SCOPE/);
   assert.throws(() => run(prepared(), 'source-version.accept', { sourceVersion: 'v1' }, (c, command) => { approval(c, command); c.approval.sourceDigest = 'b'.repeat(64); }), /APPROVAL/);
 });
+test('future source map is denied', () => assert.throws(() => run(emptyState('org-1', 's1'), 'import', source, c => { c.sourceAuthority.effectiveFrom = '2026-10-08T00:00:00Z'; }), /SOURCE_AUTHORITY/));
+test('revoked source map is denied', () => assert.throws(() => run(emptyState('org-1', 's1'), 'import', source, c => { c.sourceAuthority.revoked = true; }), /SOURCE_AUTHORITY/));
+for (const field of ['org', 'id', 'version', 'sha256', 'state']) test(`resolved document ${field} mismatch denied`, () => assert.throws(() => run(emptyState('org-1', 's1'), 'import', source, c => { c.originalDocument[field] = 'different'; }), /RESOLVED_ORIGINAL/));
+test('command document is not independent verification', () => assert.throws(() => run(emptyState('org-1', 's1'), 'import', source, c => { delete c.originalDocument; }), /RESOLVED_ORIGINAL/));
+for (const kind of ['beneficiary', 'property', 'mandate']) {
+  test(`acceptance needs resolved ${kind}`, () => assert.throws(() => run(prepared(), 'source-version.accept', { sourceVersion: 'v1' }, (c, command) => { approval(c, command); delete c.resolvedReferences[kind]; }), /RESOLVED_REFERENCE/));
+  test(`acceptance rejects cross-org ${kind}`, () => assert.throws(() => run(prepared(), 'source-version.accept', { sourceVersion: 'v1' }, (c, command) => { approval(c, command); c.resolvedReferences[kind].org = 'other'; }), /RESOLVED_REFERENCE/));
+  test(`acceptance rejects wrong ${kind}`, () => assert.throws(() => run(prepared(), 'source-version.accept', { sourceVersion: 'v1' }, (c, command) => { approval(c, command); c.resolvedReferences[kind].id = 'other'; }), /RESOLVED_REFERENCE/));
+}
