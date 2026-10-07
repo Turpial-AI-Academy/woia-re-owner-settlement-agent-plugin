@@ -1,42 +1,9 @@
-# woia-re-owner-settlement
+# WOIA RE Owner Settlement v0.5.0
 
-Portable Agent Plugin for Import and reconcile externally calculated owner settlements without issuing or paying them..
+Thin shared-provider for externally calculated owner-settlement import, tracking, extraction evidence, reconciliation, Finance acceptance and delivery-package preparation.
 
-## Capability
+Read [skill](skills/woia-re-owner-settlement/SKILL.md) and [contract](skills/woia-re-owner-settlement/references/contract.md). External administration remains formal calculator. No calculate, authoritative issue, financial posting, payout or human-contact capability. Customer Service delivers through Communications.
 
-~~~text
-DISCOVER -> DECIDE -> IMPLEMENT -> VALIDATE -> REPORT
-~~~
+Agent Plugins 1.0.0; version 0.5.0; no MCP or orchestrator. The deterministic helper requires authentic current organization resources and host atomic persistence. No external adapter is advertised qualified.
 
-The plugin adapts to the repository it operates on without requiring the consumer to adopt WOIA's authoring toolchain.
-
-## Portable package
-
-~~~text
-plugin.json
-README.md
-CHANGELOG.md
-LICENSE
-skills/**
-# optional source diagnostic when retained by the repository
-CHECKSUMS.sha256
-~~~
-
-`CHECKSUMS.sha256` is optional source evidence, not a required portable/release artifact.
-
-Add `mcp.json` only if the capability genuinely requires MCP.
-
-## Consumer requirements
-
-Document only genuine capability/runtime requirements here. Do not list maintenance Node/pnpm/Mise/Docker unless the portable capability itself truly needs them.
-
-## Development
-
-~~~text
-mise install
-mise run bootstrap
-mise run doctor
-mise run ci:fast
-mise run ci:extended
-mise run release:check
-~~~
+Validate with mise run bootstrap, mise run doctor, mise run ci:fast and Ecosystem v0.5.4 mise run plugin:certify-thin --repo <absolute-path>. Inherited full-profile tasks remain dormant; read authoring VALIDATION.md. No admission, release, Operator E2E or Production Ready claim.

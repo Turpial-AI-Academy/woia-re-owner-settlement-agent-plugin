@@ -1,0 +1,13 @@
+# External settlement contract
+
+Permanent semantic home: published woia-re-domain-contracts v0.5.0 for canonical Real Estate source-authority relations and cross-domain assertions. This provider implements the approved narrow external owner-settlement contract; it does not need the temporary programme repository at runtime. Exact implementation-authorization provenance is retained outside the portable payload in candidate evidence.
+
+Finance and Property Management (`asset-management`) import/read/link extraction/reconcile under exact grants. Finance exclusively accepts source versions and prepares packages. Customer Service can read only approved delivery packages; it sends through Communications. No operation calculates, issues formal settlement, posts financial facts or pays.
+
+Stable external identity is system/account/external settlement ID. Each version retains original DocumentVersion checksum, beneficiary, Property, Mandate, period and currency. Changed material fields create new attributable versions requiring exact acceptance; they never rewrite history. Extraction is Evidence. Reconciliation links Charge/Payment/Allocation/Journal refs without altering either side; full reconciliation revisions survive. UNKNOWN blocks acceptance. An explicit current discrepancy policy may accept a disputed version without erasing discrepancy.
+
+Context is trusted host-resolved current actor/Task/org/action/target/department grant with validity interval, policy revision/digest/interval/hold, Source Authority Map revision/digest/system/account/freshness/conflict. Policy chooses POLICY_GOVERNED or APPROVAL_REQUIRED. Approval binds source version/digest, payload digest, target, operation and competent approver; independence is configured, not universal. No legal/account/fee/vendor values are invented.
+
+`execute(state, command, context)` returns new state/result. Expected revision is required for mutations. Stable operation-key/payload replay returns prior result after current authority rechecks; conflicting reuse is denied. Host must atomically persist state/history/receipt with CAS and validate typed canonical refs with owning providers. Pure in-memory checks do not claim distributed persistence, authentication or adapter qualification. The 85 canonical relations/E2E fixtures remain in Domain Contracts; no new dependency edge.
+
+Package binds exact accepted source, beneficiary and content checksum. Preparation is not sending; sending is not payout. Separate Payments/Finance authority controls any payout. Provider tests establish local contract only; Operator E2E and Production Ready are not claimed.
