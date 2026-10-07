@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "woia-re-owner-settlement",
+  "version": "0.5.0",
+  "description": "Import and reconcile externally calculated owner settlements without issuing or paying them.",
+  "author": {
+    "name": "Turpial AI Academy",
+    "url": "https://github.com/Turpial-AI-Academy"
+  },
+  "homepage": "https://github.com/Turpial-AI-Academy/woia-re-owner-settlement-agent-plugin",
+  "repository": "https://github.com/Turpial-AI-Academy/woia-re-owner-settlement-agent-plugin",
+  "license": "MIT",
+  "keywords": ["agent-plugin", "woia-re-owner-settlement"]
+}
