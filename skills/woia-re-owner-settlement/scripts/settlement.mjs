@@ -31,7 +31,19 @@ function guard(state, command, context) {
 
 function sourceGuard(version, context) {
   const s = context.sourceAuthority;
-  fail(s && text(s.id) && text(s.version) && digest(s.digest) && s.org === context.org && s.target === context.grant.target && s.revision === context.currentSourceRevision && s.system === version.system && s.account === version.account && s.role === 'external-formal-calculator' && s.freshUntil && Date.parse(context.now) < Date.parse(s.freshUntil) && s.conflict === false, 'SOURCE_AUTHORITY_REQUIRED');
+  fail(s && text(s.id) && text(s.version) && digest(s.digest) && s.org === context.org && s.target === context.grant.target && s.revision === context.currentSourceRevision && s.system === version.system && s.account === version.account && s.role === 'external-formal-calculator' && !s.revoked && Date.parse(s.effectiveFrom) <= Date.parse(context.now) && s.freshUntil && Date.parse(context.now) < Date.parse(s.freshUntil) && s.conflict === false, 'SOURCE_AUTHORITY_REQUIRED');
+}
+
+function documentGuard(version, context) {
+  const d = context.originalDocument;
+  fail(d && d.org === context.org && d.id === version.document.id && d.version === version.document.version && d.sha256 === version.document.sha256 && d.state === 'USABLE', 'RESOLVED_ORIGINAL_DOCUMENT_REQUIRED');
+}
+
+function referenceGuard(version, context) {
+  for (const kind of ['beneficiary', 'property', 'mandate']) {
+    const ref = context.resolvedReferences?.[kind];
+    fail(ref && ref.org === context.org && ref.id === version[kind] && ref.state === 'ACCEPTED' && !ref.revoked, `RESOLVED_REFERENCE_REQUIRED:${kind}`);
+  }
 }
 
 function approval(command, version, context) {
@@ -59,6 +71,7 @@ export function execute(state, command, context) {
     fail(input.document && text(input.document.id) && text(input.document.version) && input.document.state === 'USABLE' && digest(input.document.sha256), 'USABLE_ORIGINAL_DOCUMENT_REQUIRED');
     fail(!['__proto__', 'constructor', 'prototype'].includes(input.sourceVersion), 'RESERVED_SOURCE_VERSION');
     sourceGuard(input, context);
+    documentGuard(input, context);
     const first = Object.values(next.versions)[0]?.source;
     if (first) for (const k of ['system', 'account', 'externalSettlementId']) fail(first[k] === input[k], 'EXTERNAL_SETTLEMENT_IDENTITY_CONFLICT');
     fail(!next.versions[input.sourceVersion], 'SOURCE_VERSION_EXISTS');
@@ -90,6 +103,8 @@ export function execute(state, command, context) {
       result = { status: input.status, editsExternalSource: false, postsLedger: false };
     } else if (command.action === 'owner-settlement.source-version.accept') {
       fail(!v.acceptance && v.extraction && v.reconciliation, 'ACCEPTANCE_PREREQUISITES_REQUIRED');
+      documentGuard(v.source, context);
+      referenceGuard(v.source, context);
       fail(v.reconciliation.status !== 'UNKNOWN', 'UNKNOWN_BLOCKS_ACCEPTANCE');
       fail(context.policy.reconciliationRuleRef && (v.reconciliation.status === 'MATCHED' || context.policy.acceptDiscrepancy === true), 'DISCREPANCY_POLICY_REQUIRED');
       approval(command, v.source, context);
