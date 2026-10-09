@@ -1,6 +1,6 @@
 # External settlement contract
 
-Permanent semantic home: published woia-re-domain-contracts v0.5.6 for canonical Real Estate source-authority relations and cross-domain assertions. This provider implements the approved narrow external owner-settlement contract; it does not need the temporary programme repository at runtime. Exact implementation-authorization provenance is retained outside the portable payload in candidate evidence.
+Permanent semantic home: published woia-re-domain-contracts v0.5.7 for canonical Real Estate source-authority relations and cross-domain assertions. This provider implements the approved narrow external owner-settlement contract; it does not need the temporary programme repository at runtime. Exact implementation-authorization provenance is retained outside the portable payload in candidate evidence.
 
 Finance and Property Management (`asset-management`) import/read/link extraction/reconcile under exact grants. Finance exclusively accepts source versions and prepares packages. Customer Service can read only approved delivery packages; it sends through Communications. No operation calculates, issues formal settlement, posts financial facts or pays.
 

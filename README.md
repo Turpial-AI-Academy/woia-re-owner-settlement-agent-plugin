@@ -1,12 +1,12 @@
-# WOIA RE Owner Settlement v0.5.6
+# WOIA RE Owner Settlement v0.5.7
 
 Thin shared-provider for externally calculated owner-settlement import, tracking, extraction evidence, reconciliation, Finance acceptance and delivery-package preparation.
 
 Read [skill](skills/woia-re-owner-settlement/SKILL.md) and [contract](skills/woia-re-owner-settlement/references/contract.md). External administration remains formal calculator. No calculate, authoritative issue, financial posting, payout or human-contact capability. Customer Service delivers through Communications.
 
-Agent Plugins 1.0.0; version 0.5.6; no MCP or orchestrator. The deterministic helper requires authentic current organization resources and host atomic persistence. No external adapter is advertised qualified.
+Agent Plugins 1.0.0; version 0.5.7; no MCP or orchestrator. The deterministic helper requires authentic current organization resources and host atomic persistence. No external adapter is advertised qualified.
 
-Validate with mise run bootstrap, mise run doctor, mise run ci:fast and Ecosystem v0.5.6 mise run plugin:certify-thin --repo <absolute-path>. Inherited full-profile tasks remain dormant; read authoring VALIDATION.md. No admission, release, Operator E2E or Production Ready claim.
+Validate with mise run bootstrap, mise run doctor, mise run ci:fast and Ecosystem v0.5.7 mise run plugin:certify-thin --repo <absolute-path>. Inherited full-profile tasks remain dormant; read authoring VALIDATION.md. No admission, release, Operator E2E or Production Ready claim.
 
 ## Maintenance
 
