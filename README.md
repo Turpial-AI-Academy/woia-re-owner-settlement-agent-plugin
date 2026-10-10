@@ -1,4 +1,4 @@
-# WOIA RE Owner Settlement v0.5.7
+# WOIA RE Owner Settlement v0.5.8
 
 Thin shared-provider for externally calculated owner-settlement import, tracking, extraction evidence, reconciliation, Finance acceptance and delivery-package preparation.
 

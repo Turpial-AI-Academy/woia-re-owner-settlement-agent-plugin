@@ -2,6 +2,7 @@
 
 ## 0.5.8
 
+- Update the consumer README's displayed version to match the candidate.
 - Remove the external methodology reference from `AGENTS.md` capability rules and renumber the remaining instructions.
 
 ## 0.5.7 — 2026-10-09
